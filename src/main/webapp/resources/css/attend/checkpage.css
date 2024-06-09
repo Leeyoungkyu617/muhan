@@ -1,0 +1,150 @@
+main {
+    overflow: auto;
+}
+.att_container {
+    width: 100%;
+    padding: 0 50px;
+    box-sizing: border-box;
+    display: flex;
+    flex-wrap: wrap;
+    column-gap: 20px;
+}
+.att_container > h2 {
+    width: 100%;
+    height: 50px;
+    line-height: 50px;
+    padding-top: 50px;
+    padding-bottom: 15px;
+    margin: 0;
+    border-bottom: 2px solid #4e4e4e;
+}
+.att_container > div {
+    padding: 10px 0;
+}
+.att_left_sec {
+    width: 40%;
+    text-align: center;
+}
+.att_right_sec {
+    width: calc(100% - 40% - 20px);
+    flex: 1 0 auto;
+}
+
+/* 왼쪽 sec 안에 있는 박스 css */
+.att_left_sec > div {
+    width: 100%;
+    padding: 10px 0;
+    box-sizing: border-box;
+    border-bottom: 1px solid #76818d;
+}
+#att_timer_now_box > div {
+    font-size: 20px;
+}
+#att_timer_date {
+}
+#att_timer_time {
+}
+#att_attend_checker_box {
+}
+.att_left_sec h3 {
+    margin: 0;
+    margin-bottom: 10px;
+}
+#att_btn_box {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    gap: 3px;
+}
+#att_btn_box > button {
+    width: 60px;
+    border: none;
+    outline: none;
+    background: #2c3e50;
+    color: #fff;
+    padding: 3px 7px;
+}
+#att_btn_box > div {
+    padding: 0 15px
+}
+#att_chked_start {
+}
+#att_chked_end {}
+#att_week_work_time_box {
+}
+.att_week_work_time {
+    font-size: 18px;
+}
+#att_progress_bar {
+    appearance: none;
+    margin-bottom: 10px;
+}
+#att_progress_bar::-webkit-progress-bar {
+    width: 100%;
+    border-radius: 10px;
+    overflow: hidden;
+    background: #ddd;
+}
+#att_progress_bar::-webkit-progress-value {
+    background: #2c3e50;
+}
+/* 오른쪽 sec 안에 있는 박스 css */
+table {
+    width: 100%;
+    border-top: 1px solid #2c3e50;
+    border-collapse: collapse;
+    text-align: center;
+}
+th, td {
+    border-bottom: 1px solid #2c3e50;
+    border-left: 1px solid #2c3e50;
+    padding: 3px;
+}
+th:first-child, td:first-child {
+    border-left: none;
+}
+th.att_date, td.att_date {
+    max-width: 80px;
+}
+th.att_start, td.att_start {}
+th.att_end, td.att_end {}
+th.att_chk, td.att_chk {
+    max-width: 80px;
+}
+.att_pagination {
+    text-align: center;
+}
+.att_pageActive {
+    color: #ff4444;
+}
+
+
+@media screen and (min-width: 280px) and (max-width: 920px) {
+    #att_btn_box > div {
+        padding: 0 10px;
+    }
+}
+@media screen and (min-width: 280px) and (max-width: 780px) {
+    .att_container {
+        padding: 0 25px;
+        column-gap: 5px;
+    }
+}
+
+@media screen and (min-width: 280px) and (max-width: 768px) {
+    .att_container {
+        padding: 0 20px;
+    }
+    .att_container > div {
+        width: 100%;
+    }
+    .att_left_sec {
+        max-width: 100%;
+    }
+}
+@media screen and (min-width: 280px) and (max-width: 300px) {
+    .att_container {
+        padding: 0 10px;
+    }
+}

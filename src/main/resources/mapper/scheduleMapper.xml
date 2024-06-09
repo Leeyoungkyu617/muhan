@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="utf-8" ?>  <!-- 현재 파일이 XML 파일이기 때문에 맨 위에 XML 선언이 온다 -->
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/schema/mybatis-3-mapper.dtd"> <!-- 규칙을 정의한 DTD 선언 -->
+
+<!-- 게시판 관련된 모든 sql문들을 다 여기에 넣을거임 -->
+
+<!-- namespace="com.muhan.app.패키지이름.dao.매퍼이름"
+-->
+<mapper namespace="com.muhan.app.schedule.dao.scheduleMapper">
+    <!--  delete 해당 일정 삭제 -->
+    <delete id="delete" parameterType="ScheduleDto">
+        delete from schedules
+        where sche_seq=#{sche_seq} and sche_writer=#{sche_writer}
+    </delete>
+
+    <!--  insert 일정 등록  -->
+    <insert id="insert" parameterType="ScheduleDto">
+        insert into schedules (sche_writer ,  sche_start_time , sche_end_time , sche_title , sche_contents , sche_color , sche_reg_date)
+        values (#{sche_writer} , #{sche_start_time} , #{sche_end_time} , #{sche_title} , #{sche_contents}, #{sche_color} ,now());
+    </insert>
+
+    <!--  일정 수정  -->
+    <update id="update" parameterType="ScheduleDto">
+        update schedules
+        set sche_title=#{sche_title} ,sche_start_time=#{sche_start_time} ,sche_end_time=#{sche_end_time} ,sche_contents=#{sche_contents} ,sche_color=#{sche_color}
+        where sche_seq=#{sche_seq} and sche_writer=#{sche_writer};
+    </update>
+
+    <!--  개인 일정 조회  -->
+    <select id="select" parameterType="int" resultType="ScheduleDto">
+        select *
+        from schedules
+        where sche_seq=#{sche_seq} and sche_writer=#{sche_writer};
+    </select>
+
+    <!--  일정 조회  -->
+    <select id="selectAll" parameterType="map" resultType="ScheduleDto">
+        <!--        select sche_title, sche_start_time,sche_end_time ,sche_contents , sche_color-->
+        <!--        from schedules-->
+        <!--        where sche_seq=#{sche_seq}-->
+        <!--        order by sche_start_time asc;-->
+
+        <!--        select sche_title, sche_start_time,sche_end_time ,sche_contents , sche_color from schedules-->
+        <!--        where sche_start_time >  '2024-05-00' and sche_start_time < '2024-06-01';-->
+
+        select * from schedules
+        where sche_start_time between #{start} and #{end};
+
+        <!--        sche_writer=#{sche_writer} and-->
+
+    </select>
+    <!--  일정 조회  -->
+    <select id="selectAll2" parameterType="map" resultType="ScheduleDto">
+        select * from schedules
+        where (sche_start_time between #{start} and #{end}) and sche_writer=#{user_num};
+
+        <!--        sche_writer=#{sche_writer} and-->
+
+    </select>
+</mapper>

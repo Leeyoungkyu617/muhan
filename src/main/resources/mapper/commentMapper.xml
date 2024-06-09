@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="utf-8" ?>  <!-- 현재 파일이 XML 파일이기 때문에 맨 위에 XML 선언이 온다 -->
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/schema/mybatis-3-mapper.dtd"> <!-- 규칙을 정의한 DTD 선언 -->
+
+<!-- 게시판 관련된 모든 sql문들을 다 여기에 넣을거임 -->
+
+<!-- namespace="com.muhan.app.패키지이름.dao.매퍼이름"
+-->
+<mapper namespace="com.muhan.app.board.dao.commentsMapper">
+
+    <select id="countComments" parameterType="int" resultType="int">
+        select count(*) from comments where com_board_num = #{board_seq};
+    </select>
+    <select id="selectCommentsAll" parameterType="int" resultType="CommentDto">
+        select C.*, U.user_name from comments as C
+        left join user_info as U
+        on C.com_commenter=U.user_num
+        where com_board_num=#{board_seq};
+    </select>
+
+    <!--  댓삭  -->
+    <delete id="deleteAll">
+        truncate comments
+    </delete>
+    <delete id="deleteOne" parameterType="map">
+        delete from comments where com_seq=#{com_seq} and com_commenter=#{com_commenter}
+    </delete>
+    <!--  댓글쓰기  -->
+    <insert id="insert" parameterType="CommentDto">
+        insert into comments
+        (com_board_num, com_comment, com_commenter)
+        values
+        (#{com_board_num}, #{com_comment}, #{com_commenter})
+    </insert>
+    <!--  댓글수정  -->
+    <update id="update" parameterType="CommentDto">
+        update comments set com_comment=#{com_comment}
+        where com_seq=#{com_seq} and com_commenter=#{com_commenter}
+    </update>
+</mapper>

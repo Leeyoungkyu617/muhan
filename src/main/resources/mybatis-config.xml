@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE configuration
+        PUBLIC "-//mybatis.org//DTD Config 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-config.dtd">
+<configuration>
+    <typeAliases>
+        <!-- 아직 BoardDto 안만들거니까 잠시 주석 처리하기 -->
+        <!-- 여기는 별칭 정하는곳  boardMapper 에 resultType="BoardDto" 임  -->
+        <typeAlias alias="Appr_boardList_Dto" type="com.muhan.app.approval.domain.Appr_boardList_Dto"/>
+        <typeAlias alias="Appr_appr_target_dto" type="com.muhan.app.approval.domain.Appr_appro_target_dto"/>
+        <typeAlias alias="user_session_dto" type="com.muhan.app.user.domain.Session_dto"/>
+        <typeAlias alias="UserDto" type="com.muhan.app.user.domain.UserDto"/>
+        <typeAlias alias="UserLoginDto" type="com.muhan.app.user.domain.UserLoginDto"/>
+        <typeAlias alias="BoardDto" type="com.muhan.app.board.domain.BoardDto"/>
+        <typeAlias alias="CommentDto" type="com.muhan.app.board.domain.CommentDto"/>
+        <typeAlias alias="eventPhotoDto" type="com.muhan.app.event_photo.domain.EventPhotoDto"/>
+        <typeAlias alias="ScheduleDto" type="com.muhan.app.schedule.domain.ScheduleDto"/>
+        <typeAlias alias="AttendDto" type="com.muhan.app.attend.domain.AttendDto"/>
+        <typeAlias alias="MeetingDto" type="com.muhan.app.meetingroom.domain.MeetingDto"/>
+    </typeAliases>
+</configuration>

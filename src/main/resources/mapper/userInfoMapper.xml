@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="utf-8" ?>  <!-- 현재 파일이 XML 파일이기 때문에 맨 위에 XML 선언이 온다 -->
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/schema/mybatis-3-mapper.dtd"> <!-- 규칙을 정의한 DTD 선언 -->
+
+<!-- 게시판 관련된 모든 sql문들을 다 여기에 넣을거임 -->
+
+<!-- namespace="com.muhan.app.패키지이름.dao.매퍼이름"
+-->
+
+
+<mapper namespace="com.muhan.app.user.dao.UserInfoMapper">
+
+    <!--  회원가입용(계정생성용, null값이나 default값 빼고 넣기)-->
+    <insert id="insertUser" parameterType="UserDto">
+        insert into user_info (user_num, user_dept, user_level, user_in_date, user_name, user_phone, user_addr, user_email, user_birth, user_photo, user_reg_date, user_work_date) values (#{user_num},#{user_dept},#{user_level},#{user_in_date},#{user_name},#{user_phone},#{user_addr},#{user_email},#{user_birth}, #{user_photo}, now(), 1)
+    </insert>
+
+    <!--   회원가입용(계정생성시 사번 자동으로 불러오기위해 가장 최근에 만들어진 사번 가져오기 / 컨트롤러에서 return값에 +1) -->
+    <select id="selectUserNum" resultType="int">
+        select user_num from user_info
+        order by user_seqno desc limit 0,1;
+    </select>
+
+
+
+    <!--    로그인용 (db에서 사번을 기반으로 정보 조회하는 쿼리문, selectUser id로 쿼리식별, Int 입력 매개변수 유형으로 지정, 쿼리 결과의 반환유형은 UserDto, User_info 테이블에서 user_num이 입력된 값과 일치하는 행 선택- -사용자 아이디 가져와서 사용자 정보 뽑아내기) -->
+    <select id="selectUser" parameterType="int" resultType="UserDto">
+        select * from user_info where user_num=#{user_num}
+    </select>
+
+
+
+    <!--   마이페이지에서 회원정보 조회할때 현재 로그인한 유저의 부서와 직급 각 테이블과 조인하여 부서명으로 나타내기 -->
+    <select id="getLoginUserInfo" parameterType="int" resultType="UserDto">
+        select dept_name, level_name, user_info.* from user_info left join dept on user_dept=dept_seq
+        left join levels on user_level=level_seq where user_num=#{user_num};
+    </select>
+
+    <!--   마이페이지에서 회원정보수정 (연락처, 주소, 사진 변경가능, 로그인한 정보에 맞춰 값 update -->
+    <update id="updateInfo" parameterType="map" >
+        update user_info set user_phone=#{user_phone}, user_addr=#{user_addr}, user_photo=#{user_photo} where user_num=#{user_num}
+    </update>
+
+    <!--   마이페이지에서 비밀번호변경 (비밀번호 로그인한 정보에 맞춰 값 update) -->
+    <update id="updatePw" parameterType="UserDto">
+        update user_info set user_pw=#{user_pw} where user_num=#{user_num}
+    </update>
+
+
+
+    <!--  비밀번호찾기 (사번, 이름, 핸드폰 db에 있는지 확인)  -->
+    <select id="findPwChk" parameterType="UserDto" resultType="UserDto">
+        select user_num from user_info where user_num = #{user_num} and user_name=#{user_name} and user_phone=#{user_phone}
+    </select>
+
+    <!--  비밀번호찾기 -> 변경 (앞에서 넘겨준 사번 정보에 맞춰 값 update) -->
+    <update id="changePw" parameterType="map">
+        update user_info set user_pw=#{user_pw} where user_num=#{user_num}
+    </update>
+
+    <select id="get_user_info" parameterType="int" resultType="user_session_dto">
+        select u.user_level, u.user_dept, u.user_num, u.user_name, u.user_photo, l.level_name, a.att_start, a.att_end from
+        user_info as u left join levels as l
+        on u.user_level = l.level_seq
+        left join attend a
+        on u.user_num = a.att_user
+        where u.user_num = #{user_num} order by att_start desc limit 0, 1;
+    </select>
+
+    <!--    이영규 추가 0531이후 ~~~~~~~~~~~~~~~~-->
+    <select id="get_dept_people" parameterType="map" resultType="user_session_dto">
+        select u.user_name, u.user_num,l.level_name from user_info as u left join levels as l on u.user_level = l.level_seq where u.user_dept = #{user_dept} and u.user_level &lt; #{user_level} order by u.user_level asc;
+    </select>
+
+
+</mapper>

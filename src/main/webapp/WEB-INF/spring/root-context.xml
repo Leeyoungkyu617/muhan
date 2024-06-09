@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns:mvn="http://www.springframework.org/schema/mvc"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns="http://www.springframework.org/schema/beans"
+       xmlns:context="http://www.springframework.org/schema/context"
+       xsi:schemaLocation="http://www.springframework.org/schema/mvc
+	   https://www.springframework.org/schema/mvc/spring-mvc.xsd
+		http://www.springframework.org/schema/beans https://www.springframework.org/schema/beans/spring-beans.xsd
+		http://www.springframework.org/schema/context https://www.springframework.org/schema/context/spring-context.xsd">
+
+
+    <!-- Root Context: defines shared resources visible to all other web components -->
+    <bean id="dataSource" class="org.springframework.jdbc.datasource.DriverManagerDataSource">
+        <!--		<property name="driverClassName" value="com.mysql.jdbc.Driver"></property>-->
+        <property name="driverClassName" value="net.sf.log4jdbc.sql.jdbcapi.DriverSpy"></property>
+        <property name="url" value="jdbc:log4jdbc:mysql://localhost:3306/muhan?useUnicode=true&amp;characterEncoding=utf8"></property>
+        <property name="username" value="muhan"></property>
+        <property name="password" value="123456789!"></property>
+    </bean>
+
+    <!-- SqlSessionFactory 설정 : 이거 하면 mybatis-config.xml 랑 mapper/*Mapper.xml 파일들 만들어야함 -->
+    <bean id="sqlSessionFactory" class="org.mybatis.spring.SqlSessionFactoryBean">
+        <property name="dataSource" ref="dataSource"/>
+        <property name="configLocation"  value="classpath:mybatis-config.xml"/> <!-- mybatis 설정파일 위치 (main > resource 폴더)-->
+        <property name="mapperLocations" value="classpath:mapper/**/*Mapper.xml"/> <!--sql 담긴 파일들 위치랑 이름 패턴 지정한 파일-->
+    </bean>
+
+    <bean id="sqlSession" class="org.mybatis.spring.SqlSessionTemplate">
+        <constructor-arg ref="sqlSessionFactory"/>
+    </bean>
+
+    <context:component-scan base-package="com.muhan.app" />
+</beans>
+
+

@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="utf-8" ?>  <!-- 현재 파일이 XML 파일이기 때문에 맨 위에 XML 선언이 온다 -->
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/schema/mybatis-3-mapper.dtd"> <!-- 규칙을 정의한 DTD 선언 -->
+
+<!-- 게시판 관련된 모든 sql문들을 다 여기에 넣을거임 -->
+
+<!-- namespace="com.muhan.app.패키지이름.dao.매퍼이름"
+
+com.muhan.app.attend.dao
+-->
+<mapper namespace="com.muhan.app.attend.dao">
+    <!-- 그날 첫 출근 행을 boolean 처럼  가져온다. (출근 안 돼 있으면, 안 가져온다. result = 0 ) -->
+    <select id="get_first_attend" parameterType="map" resultType="int">
+        select count(*) from attend where (select Date(att_start)) = (select date(now())) and att_user = #{att_user}
+    </select>
+    <select id="select_first_attend_dto" parameterType="int" resultType="AttendDto">
+        select * from attend where (select Date(att_start)) = (select date(now())) and att_user = #{att_user}
+    </select>
+    <!--로그인한 사람의 출근 기록을 전부 가져오는 select문 -->
+    <select id="selectAll" parameterType="int" resultType="AttendDto">
+        select * from attend where att_user=#{att_user}
+    </select>
+    <!-- 로그인한 사람에게 부여된 금주의 근로시간을 가져오기 -->
+    <select id="selectWeeklyTime" parameterType="int" resultType="Integer">
+        select wk.wk_availtime
+        from attend a left join user_info u
+        on a.att_user=u.user_num
+        left join worktime wk
+        on u.user_work_date=wk.wk_seq
+        where a.att_user=#{att_user}
+        order by att_reg_date desc
+        limit 1
+    </select>
+    <!-- 근태 게시판용 -->
+    <select id="select_att_page_all" parameterType="int" resultType="int">
+        select count(*) from attend where att_user=#{att_user}
+    </select>
+    <select id="select_att_page" parameterType="map" resultType="AttendDto">
+        select A.*, U.user_seqno, U.user_name, U.user_num from
+        attend as A left join user_info as U on A.att_user = U.user_num
+        where A.att_user = #{user_num}
+        order by A.att_seq desc limit #{offset}, #{page_size}
+    </select>
+    <!-- 그날의 출근 시간이 있는 행을 insert 한다. att_end, _chk는 null 상태이다.-->
+    <insert id="insertAttend" parameterType="map">
+        insert into attend (att_user, att_start, att_reg_date) values (#{att_user}, #{att_start}, now())
+    </insert>
+    <!-- 그날의 출근시간이 있고 _end 가 null 인 행을 가져와서 업데이트한다. 두 번 누르면... 덮어쓰기 되기로 했는지? 안 되면 조건 추가해야 할 듯? 또는, 한 번 누르면 버튼 못 누르게 js로 컨트롤한다.-->
+    <update id="update_end_time" parameterType="int">
+        update attend set att_end = now() where (select Date(att_start) = DATE(now()) and att_user = #{att_user})
+    </update>
+
+    <!--  att_chk(출근 상태? 업데이트 => 일단 null 로 있다가 controller 에서 시간 계산 후 setter 로 설정해주는 걸 받아올 거임  -->
+    <update id="update_att_chk" parameterType="map">
+        update attend set att_chk=#{att_chk} where (select Date(att_start) = DATE(now()) and  Date(att_end) = Date(now()) and att_user = #{att_user} order by att_start limit 0,1)
+    </update>
+
+
+
+</mapper>

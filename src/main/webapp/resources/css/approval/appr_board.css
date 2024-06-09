@@ -1,0 +1,244 @@
+.main_right_area{
+    position: relative;
+}
+.appr_insert_container{
+    width: 100%;
+    padding: 0 50px 0 80px;
+    box-sizing: border-box;
+    position: absolute;
+}
+
+.un_click{
+    position: absolute;
+    pointer-events: none;
+}
+
+.chk_approval{
+    display: none;
+    background: white;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    height: 403px;
+    transform: translateY(50%) translateX(-50%);
+
+}
+.chk_approval>p {
+    text-align: center;
+}
+
+.chk_approval_nav {
+    display: flex;
+    justify-content: space-around;
+}
+
+.chk_approval_common{
+    width: calc((100% - 100px)/2);
+    height: 100%;
+    border: 1px solid;
+}
+.chk_approval_group{
+    padding: 20px 0 20px 20px;
+
+    display: flex;
+    flex-direction: column;
+}
+.chk_approval_select {
+    text-align: center;
+}
+.button_area{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    gap: 10px;
+}
+
+.approval_btn{
+    width: 30px;
+    height: 30px;
+    border: 1px solid;
+    text-align: center;
+}
+
+.ckd_color{
+    background: skyblue;
+}
+
+.select_target_btn {
+    padding:10px 10px 0 0;
+    float: right;
+}
+.select_target{
+    padding: 10px;
+}
+.black_area{
+    /*display: none;*/
+    width: 100%;
+    position: absolute;
+    background: black;
+    opacity: 0.8;
+    pointer-events: none;
+}
+
+.insert_title {
+    margin: 0;
+    height: 50px;
+    padding-top: 50px;
+    padding-bottom: 15px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border-bottom: 2px solid;
+}
+
+.appr_title{
+    margin: 0;
+    height: 50px;
+    padding-top: 50px;
+    padding-bottom: 15px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border-bottom: 2px solid;
+}
+
+.appr_target_left{
+    display: none;
+    border: 1px solid;
+    box-sizing: border-box;
+    width: 40%;
+    height: 80px;
+    text-align: center;
+}
+
+.appr_target{
+    margin: 0;
+    margin-top: 20px;
+    display: flex;
+    justify-content: flex-end;
+    gap: 17px;
+    height: 100px;
+    border-bottom: 2px solid;
+    padding-bottom: 20px;
+}
+.appr_target_left{
+    border: 1px solid;
+    box-sizing: border-box;
+    width: 100px;
+    height: 100%;
+    text-align: center;
+}
+.appr_team_name{
+    border-bottom: 1px solid;
+    box-sizing: border-box;
+}
+.appr_user_name{
+    line-height: 70px;
+}
+.appr_target_btn{
+    width: 60px;
+    display: flex;
+    align-items: flex-end;
+}
+.appr_select{
+    width: 100%;
+}
+
+.apr_div_title{
+    font-size: 24px;
+    width: 100%;
+    margin-top: 20px;
+    border-bottom: 2px solid;
+    box-sizing: border-box;
+    padding-bottom: 20px;
+}
+.write_title{
+    display: flex;
+    width: 100%;
+    margin-bottom: 10px;
+}
+.div_left{
+    width: 8%;
+    font-size: 16px;
+    min-width:42px
+}
+.div_right{
+    width: 80%;
+}
+.div_right > input{
+    width: 100%;
+    height: 100%;
+}
+.notmodify_div{
+    width: 100%;
+    display: flex;
+}
+.notmodify_div > div{
+    width: 50%;
+    display: flex;
+    gap: 30px;
+    font-size: 16px;
+
+}
+
+#apr_contents {
+    display: block;
+    width: 100%;
+    height: 363px;
+    padding: 15px;
+    box-sizing: border-box;
+    margin: 20px auto;
+    border: 1px solid #76818d;
+    resize: none;
+    outline: none;
+    border-radius: 5px;
+    font-size: 16px;
+    font-family: 'IBMPlexSansKR-Regular';
+}
+
+.appr_btn{
+    width: 85px;
+    height: 35px;
+    line-height: 35px;
+    text-align: center;
+    background: #2c3e50;
+    color: #fff;
+    outline: none;
+}
+.select_btn{
+    display: flex;
+    justify-content: flex-end;
+    gap: 20px;
+    margin-top: 10px;
+}
+
+/*
+================================================================================
+*/
+.chk_approval_group {
+    height: 184px;
+}
+.select_box > .employye2 {
+    display: none;
+}
+
+.chk_approval_department > .employye {
+    cursor: pointer;
+}
+
+.hidden_target{
+    display: none;
+}
+
+
+@media screen and (max-width: 484px) {
+    .notmodify_div {
+        flex-direction: column;
+    }
+    .notmodify_div > div {
+        width: auto;
+    }
+    .appr_insert_container {
+    padding: 0 10px;
+    }
+}

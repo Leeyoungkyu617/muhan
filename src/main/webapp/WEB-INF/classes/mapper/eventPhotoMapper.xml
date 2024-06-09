@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="utf-8" ?>  <!-- 현재 파일이 XML 파일이기 때문에 맨 위에 XML 선언이 온다 -->
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/schema/mybatis-3-mapper.dtd"> <!-- 규칙을 정의한 DTD 선언 -->
+
+<!-- 게시판 관련된 모든 sql문들을 다 여기에 넣을거임 -->
+
+<!-- namespace="com.muhan.app.패키지이름.dao.매퍼이름"
+-->
+<!--<mapper namespace="com.muhan.app.event_photo.dao">-->
+<mapper namespace="com.muhan.app.event_photo.dao">
+
+    <!-- 테이블 수 불러오기 -->
+    <select id="photo_count" resultType="int">
+        SELECT count(*) FROM event_photo
+    </select>
+
+    <!--  -->
+    <select id="photo_select" parameterType="int" resultType="EventPhotoDto">
+        SELECT * from event_photo where photo_seq = #{photo_seq}
+    </select>
+
+    <!-- 테이블에 있는 모든 정보 가져오기 -->
+    <select id="photo_selectAll" resultType="EventPhotoDto" parameterType="Map">
+        SELECT * from event_photo
+        order by photo_reg_date desc, photo_seq desc
+        limit #{photo_offset}, #{photo_page_size}
+    </select>
+
+    <!-- 관리자용 게시물 삭제 -->
+    <delete id="photo_deleteForAdmin" parameterType="map">
+        delete from event_photo where photo_seq = #{photo_seq} and photo_uploader = #{photo_uploader}
+    </delete>
+
+    <delete id="photo_deleteAll">
+        truncate event_photo
+    </delete>
+
+    <!-- 관리자 글쓰기 -->
+    <insert id="photo_insert" parameterType="EventPhotoDto">
+        insert into event_photo (photo_uploader, photo_new_name, photo_reg_date, photo_title)
+        values
+        (#{photo_uploader}, #{photo_new_name}, now(), #{photo_title})
+    </insert>
+
+    <update id="photo_update" parameterType="EventPhotoDto">
+        update event_photo set photo_title = #{photo_title} , photo_new_name = #{photo_new_name}
+        where photo_seq = #{photo_seq} and photo_uploader = #{photo_uploader}
+    </update>
+
+
+
+</mapper>

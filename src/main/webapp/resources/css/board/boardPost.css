@@ -1,0 +1,139 @@
+main {
+    overflow: auto;
+}
+.post_container {
+    width: 100%;
+    padding: 0 50px;
+    box-sizing: border-box;
+}
+.post_mode {
+    margin: 0;
+    height: 50px;
+    padding-top: 50px;
+    padding-bottom: 15px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border-bottom: 2px solid;
+}
+.post_form {
+    margin: 0 auto;
+    width: 100%;
+}
+.post_frm_head {
+    padding: 5px 0;
+    font-size: 17px;
+}
+.post_frm_head > span {
+    display: inline-block;
+    width: 65px;
+    padding-left: 15px;
+}
+.post_title_input {
+    width: 60%;
+    height: 27px;
+    border: 1px solid;
+    box-sizing: border-box;
+    outline: none;
+}
+.post_frm_head > .post_title {
+    width: 50%;
+    padding-left: 15px;
+    border: none;
+    outline: none;
+    font-size: 18px;
+}
+.post_class_sel {
+    height: 27px;
+    border: 1px solid;
+    box-sizing: border-box;
+    outline: none;
+    margin-left: 0.5%;
+    float: right;
+}
+.post_tag_box {
+    display: flex;
+    padding: 10px 0;
+    border-bottom: 2px solid #2c3e50;
+}
+.post_tag_box > li {
+    position: relative;
+    padding: 0 15px;
+    font-size: 12px;
+}
+.post_tag_box > li:nth-child(1)::after,
+.post_tag_box > li:nth-child(2)::after{
+    content: "";
+    position: absolute;
+    right: 0;
+    top: 50%;
+    transform: translateY(-50%);
+    width: 1px;
+    height: 80%;
+    background: #76818d;
+}
+#post_content {
+    display: block;
+    width: 100%;
+    height: 400px;
+    padding: 15px;
+    box-sizing: border-box;
+    margin: 20px auto;
+    border: 1px solid #76818d;
+    resize: none;
+    outline: none;
+    border-radius: 5px;
+    font-size: 16px;
+    font-family: 'IBMPlexSansKR-Regular';
+}
+
+.post_file_attached {
+    height: 40px;
+    line-height: 40px;
+    padding: 0 10px;
+    box-sizing: border-box;
+    border: 1px solid #76818d;
+    width: 78%;
+    color: #76818d;
+}
+.post_frm_footer {
+    margin: 15px 0;
+    display: flex;
+    gap: 5px;
+}
+.post_frm_footer > button {
+    appearance: none;
+    width: 60px;
+    padding: 0;
+    height: 35px;
+    line-height: 35px;
+    text-align: center;
+    background: #2c3e50;
+    color: #fff;
+    outline: none;
+    font-size: 13px;
+}
+.post_return_btn {
+    appearance: none;
+    width: 75px;
+    padding: 0;
+    height: 35px;
+    line-height: 35px;
+    text-align: center;
+    background: #2c3e50;
+    color: #fff;
+    font-size: 13px;
+}
+
+@media screen and (min-width: 280px) and (max-width: 760px) {
+    .post_container {
+        padding: 0 20px;
+    }
+}
+
+@media screen and (min-width: 280px) and (max-width: 480px) {
+    .post_class_sel {
+        float: none;
+        margin-top: 5px;
+    }
+}

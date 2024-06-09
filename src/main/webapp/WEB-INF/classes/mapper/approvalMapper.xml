@@ -1,0 +1,79 @@
+<?xml version="1.0" encoding="utf-8" ?>  <!-- 현재 파일이 XML 파일이기 때문에 맨 위에 XML 선언이 온다 -->
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/schema/mybatis-3-mapper.dtd"> <!-- 규칙을 정의한 DTD 선언 -->
+
+<!-- 게시판 관련된 모든 sql문들을 다 여기에 넣을거임 -->
+
+<!-- namespace="com.muhan.app.패키지이름.dao.매퍼이름"
+-->
+<mapper namespace="com.muhan.app.approval.dao">
+    <!--    결제 상신문서 전체 가져오기-->
+    <select id="get_all_count" resultType="int" parameterType="map">
+        select count(*) from approval
+        where
+        <choose>
+            <when test='option == "A"'>
+                apr_writer = #{apr_writer}
+            </when>
+            <otherwise>
+                apr_upper= #{apr_upper};
+            </otherwise>
+        </choose>
+
+    </select>
+
+    <select id="select_page" parameterType="map" resultType="Appr_boardList_Dto">
+        select a.*, u.user_name as user_name from approval as a
+        left join user_info as u on a.apr_upper = u.user_num
+        where
+        <choose>
+            <when test='option == "A"'>
+                apr_writer = #{apr_writer}
+            </when>
+            <otherwise>
+                apr_upper= #{apr_upper} and apr_chk=0
+            </otherwise>
+        </choose>
+        order by apr_reg_date desc, apr_seq desc limit #{offset}, #{page_size}
+    </select>
+
+    <!--    결재선 담당자 값 던져주기-->
+    <select id="select_target" parameterType="map" resultType="Appr_appr_target_dto">
+        select dept.dept_name, ui.user_name, ui.user_seqno from user_info as ui
+        left join dept on ui.user_dept = dept.dept_seq
+        where user_dept=#{user_dept} and ui.user_level &lt; #{user_level};
+    </select>
+
+    <!--   결재 올릴수 있는 사람 선택하기-->
+    <select id="select_target_approval" resultType="Appr_appr_target_dto">
+        select u.user_seqno, u.user_name, l.level_name
+        from user_info as u left join levels as l on u.user_level = l.level_seq;
+    </select>
+
+    <!--    결재 게시판 중에 결재해야할 목록의 개수-->
+    <select id="get_approval_count" parameterType="int" resultType="int">
+        select count(*) from approval where apr_upper = #{apr_upper} and apr_chk = 1
+    </select>
+
+    <insert id="write" parameterType="Appr_boardList_Dto">
+        insert into approval(apr_writer, apr_upper, apr_title, apr_contents, apr_attach, apr_ori_attach, apr_u_time, apr_chk, apr_reg_date) values (#{apr_writer}, #{apr_upper}, #{apr_title}, #{apr_contents}, #{apr_attach}, #{apr_ori_attach}, now(), 0, now());
+    </insert>
+
+    <!--    read(자기화면 보이게) 화면 가져오기-->
+    <select id="read" parameterType="int" resultType="Appr_boardList_Dto">
+        select u.user_name as upper_user_name, l.level_name as upper_level_name, u2.user_name as writer_name, u2.user_level as write_user_level, u2.user_name as user_name, a.* from approval as a left join user_info as u on a.apr_upper = u.user_num left join levels as l on u.user_level = l.level_seq left join user_info u2 on a.apr_writer = u2.user_num where a.apr_seq = #{apr_seq};
+    </select>
+
+    <update id="modify" parameterType="Appr_boardList_Dto">
+        update approval set apr_upper = #{apr_upper}, apr_title = #{apr_title}, apr_contents = #{apr_contents}, apr_attach =
+        #{apr_attach}, apr_ori_attach = #{apr_ori_attach} where apr_seq = #{apr_seq};
+    </update>
+
+    <delete id="delete" parameterType="int">
+        delete from approval where apr_seq=#{apr_seq}
+    </delete>
+    <update id="accept_is_not" parameterType="map">
+        update approval set apr_chk = #{apr_chk} where apr_seq = #{apr_seq}
+    </update>
+
+</mapper>

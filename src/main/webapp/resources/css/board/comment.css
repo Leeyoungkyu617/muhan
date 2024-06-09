@@ -1,0 +1,121 @@
+.cmt_start_tab {
+    width: 100%;
+    padding: 10px 0;
+    border-bottom: 1px solid #2c3e50;
+}
+#cmt_reg_comment {
+    margin: 10px 0;
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+}
+#cmt_txt_comment {
+    width: 80%;
+    font-size: 15px;
+    font-family: 'IBMPlexSansKR-Regular';
+    resize: none;
+    outline: none;
+}
+#cmt_submit_btn {
+    height: 40px;
+    padding: 0 15px;
+    background: #2c3e50;
+    color: #fff;
+    border: none;
+    outline: none;
+}
+#cmt_list {
+    width: 100%;
+    height: auto;
+}
+.cmt_row {
+    position: relative;
+    padding: 5px 0;
+    border-bottom: 1px solid #76818d;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+.cmt_row_content_box {
+    width: 79%;
+}
+.cmt_comment {
+    display: block;
+    width: 100%;
+    border: none;
+    outline: none;
+    resize:none;
+    padding: 0;
+    font-size: 15px;
+    font-family: 'IBMPlexSansKR-Regular';
+    margin-bottom: 5px;
+
+}
+.cmt_row_info_box {
+    display: flex;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    font-size: 14px;
+}
+.cmt_info_tab {
+    display: flex;
+    gap: 10px;
+    font-size: 12px;
+}
+.cmt_commenter {
+    font-weight: 900;
+    padding-right: 10px;
+    position: relative;
+}
+.cmt_commenter::after {
+    content:"";
+    position: absolute;
+    top: 50%;
+    right: 0;
+    transform: translateY(-50%);
+    width: 1px;
+    height: 55%;
+    background: #76818d;
+}
+
+.cmt_util_tab {
+    display: flex;
+}
+.cmt_util_tab > div {
+    padding: 0 5px;
+    font-size: 13px;
+}
+.cmt_util_tab > div > span {
+    display: block;
+    width: 100%;
+}
+.cmt_modify_btn:hover span,
+.cmt_delete_btn:hover span,
+.cmt_modify_save_btn:hover span,
+.cmt_modify_cancel_btn:hover span{
+    border-bottom: 1px solid #2c3e50;
+    cursor: pointer;
+}
+.display_none {
+    display: none;
+}
+.active_edit {
+    border: 1px solid;
+    border-radius: 0;
+    padding: 5px;
+    box-sizing: border-box;
+}
+@media screen and (min-width: 280px) and (max-width: 375px) {
+    .cmt_row_content_box {
+        width: 75%;
+    }
+    .cmt_util_tab {
+        gap: 3px;
+    }
+    .cmt_util_tab > div {
+        padding: 0;
+    }
+    #cmt_submit_btn {
+        padding: 0 7px;
+    }
+}

@@ -1,0 +1,87 @@
+<?xml version="1.0" encoding="utf-8" ?>  <!-- 현재 파일이 XML 파일이기 때문에 맨 위에 XML 선언이 온다 -->
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/schema/mybatis-3-mapper.dtd"> <!-- 규칙을 정의한 DTD 선언 -->
+
+<!-- board 관련된 모든 sql문들을 다 여기에 넣음 -->
+
+<!-- namespace="com.muhan.app.패키지이름.dao.매퍼이름" -->
+<mapper namespace="com.muhan.app.board.dao.BoardMapper">
+    <!-- 게시판에 있는 전체 글 개수 가져오기 -->
+    <select id="countAll" resultType="int">
+        select count(*) from board
+    </select>
+    <!-- 게시판에서 board_seq 를 기준으로 한 줄 가져오기-->
+    <select id="select" parameterType="int" resultType="BoardDto">
+        select B.*, U.user_seqno, U.user_name, U.user_num from board as B left join user_info as U on B.board_writer = U.user_seqno
+        where B.board_seq=#{board_seq};
+    </select>
+    <!-- 게시판에서 board에 있는 글 전체를 가져오기 -->
+    <select id="selectAll" resultType="BoardDto">
+        select B.*, U.user_seqno, U.user_name, U.user_num from board as B left join user_info as U on B.board_writer = U.user_seqno
+        order by B.board_seq desc, B.board_date desc;
+    </select>
+    <!-- 게시판 페이지 하나에 보여줄 글 n개를 선택해서 가져오기 -->
+    <select id="selectPage" parameterType="map" resultType="BoardDto">
+        select B.*, U.user_seqno, U.user_name, U.user_num from board as B left join user_info as U on B.board_writer = U.user_seqno
+        order by B.board_seq desc, B.board_date desc
+        limit #{offset}, #{page_size}
+    </select>
+    <!-- 게시판 페이지 board_class = 0인 최신순 3개 행을 가져오기 -->
+    <select id="selectClass" parameterType="int" resultType="BoardDto">
+        select B.*, U.user_seqno, U.user_name, U.user_num from board as B left join user_info as U on B.board_writer = U.user_seqno
+        where B.board_class = 0
+        order by B.board_seq desc, B.board_date desc
+        limit 0, 3;
+    </select>
+    <!--게시판 공지 최신순 7행 뽑는 select 문-->
+    <select id="selectRecent" parameterType="map" resultType="BoardDto">
+        select B.*, U.user_seqno, U.user_name, U.user_num from board as B left join user_info as U on B.board_writer = U.user_seqno
+        order by B.board_seq desc, B.board_date desc
+        limit #{offset}, #{page_size};
+    </select>
+    <!--  삭제  -->
+    <!--전체 삭제 -->
+    <delete id="deleteAll">
+        truncate board
+    </delete>
+    <!--삭제 - 관리자만 가능 -->
+    <delete id="deleteEach" parameterType="map">
+        delete B from board as B left join user_info on B.board_writer = user_info.user_seqno
+        where B.board_seq=#{board_seq} and user_info.user_num=#{user_num};
+    </delete>
+    <!--  글쓰기  -->
+    <insert id="insert" parameterType="BoardDto">
+        insert into board
+
+        <choose>
+            <when test="board_file !=null and !board_file.equals('')">
+                (board_class, board_title, board_contents, board_file, board_ori_file)
+                values (#{board_class}, #{board_title}, #{board_contents}, #{board_file}, #{board_ori_file})
+            </when>
+            <otherwise>
+                (board_class, board_title, board_contents)
+                values (#{board_class}, #{board_title}, #{board_contents})
+            </otherwise>
+        </choose>
+    </insert>
+    <!--  수정  -->
+    <!-- 글 수정하기 - 관리자만 됨. -->
+    <update id="update" parameterType="BoardDto">
+        update board set
+        <choose>
+            <when test="board_file !=null and !board_file.equals('')">
+                board_class=#{board_class}, board_title=#{board_title}, board_contents=#{board_contents}, board_file=#{board_file}, board_ori_file=#{board_ori_file}
+                where board_seq=#{board_seq}
+            </when>
+            <otherwise>
+                board_class=#{board_class}, board_title=#{board_title}, board_contents=#{board_contents}
+                where board_seq=#{board_seq}
+            </otherwise>
+        </choose>
+    </update>
+    <!-- 조회수 올리기 -->
+    <update id="updateViewCount" parameterType="int">
+        update board set board_view_count = board_view_count + 1
+        where board_seq=#{board_seq}
+    </update>
+</mapper>

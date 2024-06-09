@@ -1,0 +1,308 @@
+@charset "UTF-8";
+
+.photo_container {
+    width: 100%;
+
+    /* photo_container의 높이는 100vh - (헤더 높이) <= js로 건드려도 될 것 같음. */
+    padding: 0 80px 0 80px;
+    /* 나중에 padding-left 지우기 */
+    box-sizing: border-box;
+
+    min-height: calc(100vh - 100px);
+    height: auto;
+}
+/* ************************************ */
+.photo_header {
+    width: 100%;
+    height: 50px;
+    padding-top: 50px;
+    padding-bottom: 15px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+.photo_header_title {
+    margin: 0;
+    line-height: 50px;
+}
+#photo_write_btn {
+    width: 100px;
+    height: 40px;
+    line-height: 40px;
+    text-align: center;
+    margin-right: 10px;
+    border: 1px solid;
+    cursor: pointer;
+    z-index: 9;
+}
+#photo_write_btn:hover{
+    border: 2px solid #fff;
+    color: #fff;
+    background: #000;
+    cursor: pointer;
+}
+
+.photo_body {
+    transform: translateY(-59px);
+    height: auto;
+    margin: 50px auto;
+    display: flex;
+    gap: 11px 89px;
+    flex-wrap: wrap;
+    justify-content: flex-start;
+    align-items: flex-start;
+    align-content: center;
+}
+.page_name {
+    transform: translateY(30px);
+    text-align: center;
+    margin: 0 auto;
+    font-size: 30px;
+}
+.photo_box {
+    background: #fff;
+    width: calc((100% / 3) - 60px);
+    height: 205px;
+    cursor: pointer;
+}
+.update {
+    top: 16%;
+    right: 11%;
+    position: absolute;
+    border: 2px solid #000;
+    color: #000;
+    background: #fff;
+    cursor: pointer;
+}
+
+.photo_box > a {
+    display: block;
+    width: 100%;
+    height: 100%;
+}
+.page_nav {
+    line-height: 47px;
+    font-size: 17px;
+    text-align: center;
+    bottom: 80px;
+    position: relative;
+    width: 50%;
+    height: 47px;
+    margin: 0 auto;
+}
+.photo {
+    display: flex;
+    overflow: hidden;
+    width: 100%;
+    height: 85%;
+    align-content: center;
+    justify-content: center;
+    align-items: center;
+}
+.photo_sub {
+    padding-top: 5px;
+    text-align: center;
+    width: 100%;
+    height: 15%;
+}
+.photo_img {
+    height: 100%;
+}
+
+.page_nav_i {
+    padding: 0 5px;
+    font-size: 14px;
+}
+
+.endPage {
+    padding-left: 5px;
+}
+
+.startPage {
+    padding-right: 5px;
+}
+/* =================레이어창=================== */
+
+.modal_bg {
+
+    display: none;
+    width: 100%;
+    height: 100%;
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    background: rgba(0, 0, 0, 0.6);
+    z-index: 999;
+
+}
+
+.modal_wrap {
+    border: 5px solid #2c3e50;
+    border-radius: 22px;
+    box-sizing: border-box;
+    padding: 36px;
+    display: none;
+    position: fixed;
+    top: 52%;
+    left: 58%;
+    transform: translate(-50%, -50%);
+    width: 670px;
+    /* height: 670px; */
+    background: #fff;
+    z-index: 1000;
+
+}
+
+.photo_btn {
+    border: 2px solid #000;
+    color: #000;
+    background: #fff;
+    cursor: pointer;
+}
+.photo_btn:hover{
+    border: 2px solid #000;
+    color: #fff;
+    background: #000;
+    cursor: pointer;
+}
+
+#photo_board {
+    width: 100%;
+    height: 100%;
+}
+
+.photo_title {
+    margin-bottom: 8px;
+    font-size: 19px;
+    border: none;
+    text-decoration: underline;
+    text-underline-offset: 3px;
+    font-weight: 900;
+    width: 100%;
+    /* height: 38px; */
+    pointer-events: none;
+}
+
+
+
+.photo_btn_box {
+    width: 150px;
+    height: 50px;
+}
+
+.photo_img_box {
+    margin: 15px auto;
+    text-align: center;
+    width: 100%;
+    height: 500px;
+}
+.photo_img_box > img {
+    width: 100%;
+
+}
+
+.btn_box {
+    position: absolute;
+    width: 88%;
+}
+
+#modal_close{
+    position: absolute;
+    right: 0;
+}
+
+.photo_box > span
+{display: none;}
+
+.photo_seq {
+    border: none;
+    outline: none;
+}
+.number {
+    font-size: 12px;
+
+}
+
+.photo_uploader {
+    font-weight: 700;
+    font-size: 16px;
+    border: none;
+    pointer-events: none;
+    margin: 5px 0;
+}
+
+input:focus {outline: none;}
+/*==============================================*/
+.startPage, .endPage {
+    font-size: 14px;
+}
+.pageActive {
+    color: red;
+}
+
+
+
+@media screen and (max-width: 1300px) {
+    .photo_box {
+        width: calc((100% / 2) - 60px);
+        margin-bottom: 37px;
+    }
+
+    .photo_body {
+        transform: translateY(-59px);
+        height: auto;
+        margin: 56px auto 0;
+        display: flex;
+        gap: 11px 89px;
+        flex-wrap: wrap;
+        justify-content: space-between;
+        align-items: flex-start;
+        align-content: flex-start;
+    }
+
+    .page_nav {
+        bottom: 29px;
+    }
+
+}
+
+@media screen and (max-width: 1036px) {
+    .photo_box {
+        width: calc((100% / 1) - 60px);
+    }
+
+    .photo_body {
+        justify-content: center;
+    }
+}
+
+@media screen and (max-width: 926px) {
+    .modal_wrap {
+        width: 547px;
+        left: 50%;
+        top: 50%;
+    }
+}
+
+@media screen and (max-width: 680px) {
+    .modal_wrap {
+        width: 527px;
+        height: 725px;
+    }
+}
+
+@media screen and (max-width: 500px) {
+    .photo_container {
+        padding: 0 15px 0 15px;
+    }
+
+    .modal_wrap {
+        width: 100%;
+        height: 725px;
+    }
+}
+
+
+
+
